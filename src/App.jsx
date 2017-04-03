@@ -3,9 +3,7 @@ import autoBind from 'auto-bind'
 import './App.css';
 import Test from './components/Test';
 import '../semantic/dist/semantic.min.css';
-import { Container, Header } from 'semantic-ui-react'
-import { Message } from 'semantic-ui-react'
-
+import { Container, Header, Message, Button, Divider } from 'semantic-ui-react'
 
 const jsonquestions = require('./questions/questions.json')
 
@@ -15,10 +13,16 @@ class App extends Component {
     super(props);
     autoBind(this)
 
-    this.state = {
+    this.state = this.initialState()
+
+    console.log(jsonquestions.questions.length-1)
+  }
+
+  initialState() {
+   return {
       questions : jsonquestions.questions,
       status: false,
-      questionNumber: Math.floor(Math.random() * 9) + 0,
+      questionNumber: Math.floor(Math.random() * (jsonquestions.questions.length-1)) + 0,
       answered: false,
       selectStatus: false,
       answer : ''
@@ -41,8 +45,13 @@ class App extends Component {
    this.setState({
     answered: true,
     answer : options[answerkey],
-    selectStatus : (currentQuestion.answerkey === index) ? true : false
+    selectStatus : (currentQuestion.answerkey == index) ? true : false
    })
+  }
+
+  handleClick() {
+
+   this.setState(this.initialState())
   }
 
   render() {
@@ -58,14 +67,15 @@ class App extends Component {
               options={options} 
               answerkey={answerkey} 
               getComponent={this.onClickHandler} />
-        {this.state.answered === true &&
+        {this.state.answered == true &&
           <Message
             icon={(this.state.selectStatus) ? 'checkmark' : 'remove'}
             header={questions}
             content={this.state.answer}
           />        
         }
-
+        <Divider />
+        <Button primary onClick={this.handleClick}>Next Question</Button>
       </Container>
     );
   }

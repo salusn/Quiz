@@ -19,9 +19,9 @@ class Test extends Component {
               {option}
             </List.Item>          
          )}
-          </List>
-          
+          </List>          
         </Segment>
+  
       </div>     
     );
   }
