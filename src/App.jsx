@@ -72,7 +72,9 @@ class App extends Component {
               getComponent={this.onClickHandler} />
 
 
-        
+        {this.state.answered == true &&
+          <div>You selected {this.state.answer}...Your choice is correct </div>
+        }
       </Container>
     );
   }
